@@ -1,4 +1,4 @@
-export type WorldId = "forest" | "town" | "mountain" | "castle";
+export type WorldId = "forest" | "town" | "mountain" | "castle" | "sea" | "sky";
 
 export interface LessonChallenge {
   description: string;

@@ -89,6 +89,40 @@ export const WORLDS: WorldConfig[] = [
       path: "#a78bfa",
     },
   },
+  {
+    id: "sea",
+    name: "じっせんのうみ",
+    emoji: "🌊",
+    theme: "海",
+    lessonRange: [22, 27],
+    gradient: "from-cyan-50 to-cyan-100",
+    accentColor: "cyan",
+    badgeTitle: "うみのぼうけんか",
+    colors: {
+      node: "#0891b2",
+      glow: "rgba(8,145,178,0.3)",
+      bg: "#ecfeff",
+      text: "#0e7490",
+      path: "#22d3ee",
+    },
+  },
+  {
+    id: "sky",
+    name: "ちょうせんのそら",
+    emoji: "🌤️",
+    theme: "空",
+    lessonRange: [28, 33],
+    gradient: "from-rose-50 to-rose-100",
+    accentColor: "rose",
+    badgeTitle: "そらのマスター",
+    colors: {
+      node: "#e11d48",
+      glow: "rgba(225,29,72,0.3)",
+      bg: "#fff1f2",
+      text: "#be123c",
+      path: "#fb7185",
+    },
+  },
 ];
 
 export function getWorldForLesson(order: number): WorldConfig {
