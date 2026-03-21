@@ -1,17 +1,12 @@
 import { LessonMeta, AppProgress } from "@/types/lesson";
 
 export function isLessonAccessible(
-  lesson: LessonMeta,
-  allLessons: LessonMeta[],
-  progress: AppProgress
+  _lesson: LessonMeta,
+  _allLessons: LessonMeta[],
+  _progress: AppProgress
 ): boolean {
-  // First lesson is always accessible
-  if (lesson.order === 1) return true;
-
-  // Accessible if the previous lesson (by order) is completed
-  const prev = allLessons.find((l) => l.order === lesson.order - 1);
-  if (!prev) return true;
-  return progress.lessons[prev.slug]?.completed ?? false;
+  // All lessons are always accessible
+  return true;
 }
 
 export function getCurrentLesson(

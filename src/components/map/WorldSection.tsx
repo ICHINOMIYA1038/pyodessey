@@ -2,7 +2,6 @@
 
 import { LessonMeta, AppProgress } from "@/types/lesson";
 import { WorldConfig } from "@/lib/world-config";
-import { isLessonAccessible } from "@/lib/map-utils";
 import { LessonNode } from "./LessonNode";
 
 interface WorldSectionProps {
@@ -14,12 +13,11 @@ interface WorldSectionProps {
 
 function getStatus(
   lesson: LessonMeta,
-  allLessons: LessonMeta[],
+  _allLessons: LessonMeta[],
   progress: AppProgress
-): "completed" | "current" | "locked" {
+): "completed" | "current" {
   if (progress.lessons[lesson.slug]?.completed) return "completed";
-  if (isLessonAccessible(lesson, allLessons, progress)) return "current";
-  return "locked";
+  return "current";
 }
 
 export function WorldSection({

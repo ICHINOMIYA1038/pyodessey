@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { LessonMeta, AppProgress } from "@/types/lesson";
 import { WORLDS } from "@/lib/world-config";
-import { isLessonAccessible } from "@/lib/map-utils";
-import { Check, Lock, ChevronRight } from "lucide-react";
+import { Check, ChevronRight } from "lucide-react";
 
 interface MapSidebarProps {
   lessons: LessonMeta[];
@@ -51,35 +50,28 @@ export function MapSidebar({ lessons, progress }: MapSidebarProps) {
               {/* Lesson list */}
               {worldLessons.map((lesson) => {
                 const completed = !!progress.lessons[lesson.slug]?.completed;
-                const accessible = isLessonAccessible(lesson, lessons, progress);
-                const isCurrent = !completed && accessible;
 
                 return (
                   <Link
                     key={lesson.slug}
-                    href={accessible || completed ? `/lesson/${lesson.slug}` : "#"}
-                    className={`flex items-center gap-2 px-4 py-1.5 mx-2 rounded-lg text-xs transition-colors ${
-                      !accessible && !completed ? "pointer-events-none opacity-60" : "hover:bg-[var(--surface-3)]"
-                    }`}
+                    href={`/lesson/${lesson.slug}`}
+                    className="flex items-center gap-2 px-4 py-1.5 mx-2 rounded-lg text-xs transition-colors hover:bg-[var(--surface-3)]"
                     style={{
-                      background: isCurrent ? `${world.colors.node}10` : "transparent",
+                      background: !completed ? `${world.colors.node}10` : "transparent",
                     }}
-                    aria-disabled={!accessible && !completed ? "true" : undefined}
                   >
                     {/* Status icon */}
                     {completed ? (
                       <Check className="h-3.5 w-3.5 shrink-0" style={{ color: world.colors.node }} strokeWidth={3} />
-                    ) : isCurrent ? (
-                      <ChevronRight className="h-3.5 w-3.5 shrink-0" style={{ color: world.colors.node }} />
                     ) : (
-                      <Lock className="h-3 w-3 shrink-0" style={{ color: "var(--text-muted)" }} />
+                      <ChevronRight className="h-3.5 w-3.5 shrink-0" style={{ color: world.colors.node }} />
                     )}
                     {/* Title */}
                     <span
                       className="truncate"
                       style={{
-                        color: completed ? "var(--text-secondary)" : isCurrent ? "var(--text-primary)" : "var(--text-secondary)",
-                        fontWeight: isCurrent ? 600 : 400,
+                        color: completed ? "var(--text-secondary)" : "var(--text-primary)",
+                        fontWeight: completed ? 400 : 600,
                       }}
                     >
                       {lesson.title}

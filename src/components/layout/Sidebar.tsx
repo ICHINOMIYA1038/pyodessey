@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Lock, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { ProgressBadge } from "@/components/common/ProgressBadge";
 import { useProgress } from "@/hooks/useProgress";
 import { LessonMeta } from "@/types/lesson";
@@ -30,12 +30,6 @@ export function Sidebar({ lessons }: SidebarProps) {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
-
-  const isLessonUnlocked = (lesson: LessonMeta) => {
-    if (lesson.order === 1) return true;
-    const prev = lessons.find((l) => l.order === lesson.order - 1);
-    return prev ? isCompleted(prev.slug) : false;
-  };
 
   const normalizedQuery = query.toLowerCase().trim();
   const filteredLessons = normalizedQuery
@@ -71,33 +65,25 @@ export function Sidebar({ lessons }: SidebarProps) {
               <ul className="space-y-0.5">
                 {worldLessons.map((lesson) => {
                   const isActive = pathname === `/lesson/${lesson.slug}`;
-                  const unlocked = isLessonUnlocked(lesson);
                   const completed = isCompleted(lesson.slug);
 
                   return (
                     <li key={lesson.slug}>
-                      {unlocked || completed ? (
-                        <Link
-                          href={`/lesson/${lesson.slug}`}
-                          className="flex items-center gap-2 px-2 py-1.5 text-sm transition-colors"
-                          style={{
-                            borderRadius: 'var(--radius-sm)',
-                            color: isActive ? 'var(--text-primary)' : completed ? 'var(--text-secondary)' : 'var(--text-secondary)',
-                            background: isActive ? `${world.colors.node}15` : 'transparent',
-                            borderLeft: isActive ? `2px solid ${world.colors.node}` : '2px solid transparent',
-                          }}
-                          onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.background = 'var(--surface-3)'; e.currentTarget.style.color = 'var(--text-primary)'; } }}
-                          onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = completed ? 'var(--text-secondary)' : 'var(--text-secondary)'; } }}
-                        >
-                          <ProgressBadge completed={completed} />
-                          <span className="truncate">{lesson.title}</span>
-                        </Link>
-                      ) : (
-                        <span className="flex items-center gap-2 px-2 py-1.5 text-sm" style={{ borderRadius: 'var(--radius-sm)', color: 'var(--text-muted)', borderLeft: '2px solid transparent' }}>
-                          <Lock className="h-3.5 w-3.5" />
-                          <span className="truncate">{lesson.title}</span>
-                        </span>
-                      )}
+                      <Link
+                        href={`/lesson/${lesson.slug}`}
+                        className="flex items-center gap-2 px-2 py-1.5 text-sm transition-colors"
+                        style={{
+                          borderRadius: 'var(--radius-sm)',
+                          color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                          background: isActive ? `${world.colors.node}15` : 'transparent',
+                          borderLeft: isActive ? `2px solid ${world.colors.node}` : '2px solid transparent',
+                        }}
+                        onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.background = 'var(--surface-3)'; e.currentTarget.style.color = 'var(--text-primary)'; } }}
+                        onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-secondary)'; } }}
+                      >
+                        <ProgressBadge completed={completed} />
+                        <span className="truncate">{lesson.title}</span>
+                      </Link>
                     </li>
                   );
                 })}
