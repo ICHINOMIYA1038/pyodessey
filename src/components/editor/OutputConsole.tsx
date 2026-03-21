@@ -26,14 +26,14 @@ export function OutputConsole({ result }: OutputConsoleProps) {
       className="h-full overflow-auto p-3 font-mono text-sm"
       style={{
         background: hasError
-          ? 'linear-gradient(180deg, rgba(239, 68, 68, 0.08), #1e1e2e)'
+          ? '#fff5f5'
           : hasSuccess
-            ? 'linear-gradient(180deg, rgba(45, 212, 168, 0.06), #1e1e2e)'
-            : '#1e1e2e',
+            ? '#f0fdf9'
+            : '#f8fafc',
       }}
     >
       {result.output && (
-        <pre className="whitespace-pre-wrap" style={{ color: '#e2e8f0' }}>{result.output}</pre>
+        <pre className="whitespace-pre-wrap" style={{ color: '#1a1a1a' }}>{result.output}</pre>
       )}
       {result.isTruncated && (
         <div
@@ -48,7 +48,7 @@ export function OutputConsole({ result }: OutputConsoleProps) {
         </div>
       )}
       {result.error && (
-        <pre className="whitespace-pre-wrap" style={{ color: '#fca5a5' }}>{result.error}</pre>
+        <pre className="whitespace-pre-wrap" style={{ color: '#dc2626' }}>{result.error}</pre>
       )}
       {result.isTimeout && (
         <div
