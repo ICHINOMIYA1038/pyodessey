@@ -7,6 +7,7 @@ import {
   markLessonCompleted,
   initLessonOrderMap,
   resetAllProgress,
+  earnBadge as earnBadgeStorage,
 } from "@/lib/progress";
 import { AppProgress, WorldId } from "@/types/lesson";
 
@@ -14,6 +15,8 @@ export function useProgress() {
   const [progress, setProgress] = useState<AppProgress>({
     lessons: {},
     worldsCleared: [],
+    badges: [],
+    totalXp: 0,
   });
 
   useEffect(() => {
@@ -33,13 +36,18 @@ export function useProgress() {
   }, []);
 
   const completeLesson = useCallback(
-    (slug: string): { worldCleared: WorldId | null } => {
+    (slug: string): { worldCleared: WorldId | null; xpGained: number } => {
       const result = markLessonCompleted(slug);
       setProgress(getProgress());
       return result;
     },
     []
   );
+
+  const earnBadge = useCallback((badgeId: string) => {
+    earnBadgeStorage(badgeId);
+    setProgress(getProgress());
+  }, []);
 
   const isCompleted = useCallback(
     (slug: string) => progress.lessons[slug]?.completed ?? false,
@@ -68,6 +76,7 @@ export function useProgress() {
     isCompleted,
     isWorldCleared,
     completedCount,
+    earnBadge,
     resetProgress,
   };
 }

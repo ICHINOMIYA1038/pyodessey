@@ -6,6 +6,7 @@ import { RunButton } from "@/components/editor/RunButton";
 import { OutputConsole } from "@/components/editor/OutputConsole";
 import { usePyodide } from "@/hooks/usePyodide";
 import { LessonChallenge } from "@/types/lesson";
+import { ProgressiveHints } from "./ProgressiveHints";
 
 interface ChallengeBlockProps {
   challenge: LessonChallenge;
@@ -104,6 +105,11 @@ export function ChallengeBlock({ challenge, onPass }: ChallengeBlockProps) {
         <div style={{ borderTop: '1px solid #313244' }}>
           <OutputConsole result={result} />
         </div>
+      )}
+
+      {/* Progressive hints */}
+      {challenge.hints && challenge.hints.length > 0 && !passed && !skipped && (
+        <ProgressiveHints hints={challenge.hints} failCount={failCount} />
       )}
 
       {/* 3回失敗したらスキップ表示 */}

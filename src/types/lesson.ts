@@ -4,6 +4,7 @@ export interface LessonChallenge {
   description: string;
   starterCode: string;
   expectedOutput: string;
+  hints?: string[];
 }
 
 export interface LessonMeta {
@@ -30,4 +31,6 @@ export interface LessonProgress {
 export interface AppProgress {
   lessons: Record<string, LessonProgress>;
   worldsCleared: WorldId[];
+  badges: string[];
+  totalXp: number;
 }

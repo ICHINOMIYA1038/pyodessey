@@ -68,7 +68,7 @@ export function AdventureMap({ lessons }: AdventureMapProps) {
       style={{ background: "var(--surface-0)" }}
       onKeyDown={handleMapKeyDown}
     >
-      <MapHeader completedCount={completedCount} totalCount={lessons.length} onReset={resetProgress} />
+      <MapHeader completedCount={completedCount} totalCount={lessons.length} progress={progress} onReset={resetProgress} />
       <div className="flex flex-1 overflow-hidden">
         <MapSidebar lessons={lessons} progress={progress} />
         <div
@@ -115,7 +115,7 @@ export function AdventureMap({ lessons }: AdventureMapProps) {
                 className="mt-3 text-xs"
                 style={{ color: "var(--text-muted)" }}
               >
-                💡 レッスンは順番に解放されます。ひとつずつクリアして先へ進もう！
+                💡 すべてのレッスンが自由に選べるよ。バッジを集めてコンプリートを目指そう！
               </p>
             </section>
 

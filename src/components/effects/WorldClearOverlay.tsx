@@ -6,6 +6,7 @@ import confetti from "canvas-confetti";
 import { getWorldById } from "@/lib/world-config";
 import { WorldId } from "@/types/lesson";
 import Link from "next/link";
+import { ShareButton } from "./ShareButton";
 
 interface WorldClearOverlayProps {
   show: boolean;
@@ -140,17 +141,22 @@ export function WorldClearOverlay({
             >
               「{world.badgeTitle}」の称号を手に入れた！
             </p>
-            <Link
-              href="/"
-              className="inline-block rounded-lg px-6 py-2.5 font-bold text-white transition-all"
-              style={{
-                background: "linear-gradient(135deg, #f59e0b, #d97706)",
-                boxShadow: "0 0 16px rgba(245,158,11,0.35)",
-                borderRadius: "var(--radius-md)",
-              }}
-            >
-              マップにもどる
-            </Link>
+            <div className="flex flex-col items-center gap-3">
+              <Link
+                href="/"
+                className="inline-block rounded-lg px-6 py-2.5 font-bold text-white transition-all"
+                style={{
+                  background: "linear-gradient(135deg, #f59e0b, #d97706)",
+                  boxShadow: "0 0 16px rgba(245,158,11,0.35)",
+                  borderRadius: "var(--radius-md)",
+                }}
+              >
+                マップにもどる
+              </Link>
+              <ShareButton
+                text={`「${world.name}」をクリアした！🏆 #PyOdessey #Python学習`}
+              />
+            </div>
           </motion.div>
         </motion.div>
       )}

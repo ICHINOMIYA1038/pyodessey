@@ -8,8 +8,10 @@ import { TextbookPanel } from "@/components/textbook/TextbookPanel";
 import { EditorPanel } from "@/components/editor/EditorPanel";
 import { LessonCompleteModal } from "@/components/effects/LessonCompleteModal";
 import { WorldClearOverlay } from "@/components/effects/WorldClearOverlay";
+import { BadgeUnlockModal } from "@/components/effects/BadgeUnlockModal";
 import { ChallengeBlock } from "@/components/textbook/ChallengeBlock";
 import { useProgress } from "@/hooks/useProgress";
+import { checkNewBadges, BadgeDefinition } from "@/lib/badges";
 import { Lesson, LessonMeta, WorldId } from "@/types/lesson";
 
 interface LessonClientProps {
@@ -18,11 +20,14 @@ interface LessonClientProps {
 }
 
 export function LessonClient({ lesson, allLessons }: LessonClientProps) {
-  const { accessLesson, completeLesson, isCompleted, initMap } = useProgress();
+  const { accessLesson, completeLesson, isCompleted, initMap, earnBadge, progress } = useProgress();
   const [showCompleteModal, setShowCompleteModal] = useState(false);
   const [showWorldClear, setShowWorldClear] = useState(false);
   const [clearedWorldId, setClearedWorldId] = useState<WorldId>("forest");
   const [challengePassed, setChallengePassed] = useState(false);
+  const [xpGained, setXpGained] = useState(0);
+  const [badgeQueue, setBadgeQueue] = useState<BadgeDefinition[]>([]);
+  const [currentBadge, setCurrentBadge] = useState<BadgeDefinition | null>(null);
 
   const hasChallenge = !!lesson.meta.challenge;
 
@@ -40,11 +45,56 @@ export function LessonClient({ lesson, allLessons }: LessonClientProps) {
 
   const handleComplete = () => {
     const result = completeLesson(lesson.meta.slug);
+    setXpGained(result.xpGained);
+
+    // Check for new badges
+    const updatedProgress = { ...progress };
+    updatedProgress.lessons = { ...updatedProgress.lessons, [lesson.meta.slug]: { slug: lesson.meta.slug, completed: true, lastAccessedAt: new Date().toISOString(), completedAt: new Date().toISOString() } };
+    if (result.worldCleared && !updatedProgress.worldsCleared.includes(result.worldCleared)) {
+      updatedProgress.worldsCleared = [...updatedProgress.worldsCleared, result.worldCleared];
+    }
+    updatedProgress.totalXp = (progress.totalXp || 0) + result.xpGained;
+    const newBadges = checkNewBadges(updatedProgress);
+    newBadges.forEach((b) => earnBadge(b.id));
+
     if (result.worldCleared) {
       setClearedWorldId(result.worldCleared);
       setShowWorldClear(true);
     } else {
       setShowCompleteModal(true);
+    }
+
+    if (newBadges.length > 0) {
+      setBadgeQueue(newBadges);
+    }
+  };
+
+  const handleCompleteModalClose = () => {
+    setShowCompleteModal(false);
+    showNextBadge();
+  };
+
+  const handleWorldClearClose = () => {
+    setShowWorldClear(false);
+    showNextBadge();
+  };
+
+  const showNextBadge = () => {
+    if (badgeQueue.length > 0) {
+      const [next, ...rest] = badgeQueue;
+      setCurrentBadge(next);
+      setBadgeQueue(rest);
+    }
+  };
+
+  const handleBadgeClose = () => {
+    setCurrentBadge(null);
+    if (badgeQueue.length > 0) {
+      const [next, ...rest] = badgeQueue;
+      setTimeout(() => {
+        setCurrentBadge(next);
+        setBadgeQueue(rest);
+      }, 300);
     }
   };
 
@@ -109,12 +159,18 @@ export function LessonClient({ lesson, allLessons }: LessonClientProps) {
         show={showCompleteModal}
         lessonTitle={lesson.meta.title}
         nextLessonSlug={nextLesson?.slug ?? null}
-        onClose={() => setShowCompleteModal(false)}
+        xpGained={xpGained}
+        totalXp={progress.totalXp}
+        onClose={handleCompleteModalClose}
       />
       <WorldClearOverlay
         show={showWorldClear}
         worldId={clearedWorldId}
-        onClose={() => setShowWorldClear(false)}
+        onClose={handleWorldClearClose}
+      />
+      <BadgeUnlockModal
+        badge={currentBadge}
+        onClose={handleBadgeClose}
       />
     </div>
   );

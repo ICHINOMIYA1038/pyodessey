@@ -3,7 +3,7 @@ import { WORLDS } from "@/lib/world-config";
 
 const STORAGE_KEY = "pyodessey_progress";
 
-const DEFAULT_PROGRESS: AppProgress = { lessons: {}, worldsCleared: [] };
+const DEFAULT_PROGRESS: AppProgress = { lessons: {}, worldsCleared: [], badges: [], totalXp: 0 };
 
 export function getProgress(): AppProgress {
   if (typeof window === "undefined") return DEFAULT_PROGRESS;
@@ -12,6 +12,8 @@ export function getProgress(): AppProgress {
   try {
     const parsed = JSON.parse(raw) as AppProgress;
     if (!parsed.worldsCleared) parsed.worldsCleared = [];
+    if (!parsed.badges) parsed.badges = [];
+    if (parsed.totalXp == null) parsed.totalXp = 0;
     return parsed;
   } catch {
     return DEFAULT_PROGRESS;
@@ -34,8 +36,12 @@ export function markLessonAccessed(slug: string): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 }
 
-export function markLessonCompleted(slug: string): { worldCleared: WorldId | null } {
+const XP_PER_LESSON = 10;
+const XP_PER_WORLD = 50;
+
+export function markLessonCompleted(slug: string): { worldCleared: WorldId | null; xpGained: number } {
   const progress = getProgress();
+  const alreadyCompleted = progress.lessons[slug]?.completed;
   progress.lessons[slug] = {
     slug,
     completed: true,
@@ -43,13 +49,28 @@ export function markLessonCompleted(slug: string): { worldCleared: WorldId | nul
     completedAt: new Date().toISOString(),
   };
 
+  let xpGained = 0;
+  if (!alreadyCompleted) {
+    xpGained += XP_PER_LESSON;
+  }
+
   const worldCleared = checkWorldCleared(progress, slug);
   if (worldCleared && !progress.worldsCleared.includes(worldCleared)) {
     progress.worldsCleared.push(worldCleared);
+    xpGained += XP_PER_WORLD;
   }
 
+  progress.totalXp += xpGained;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-  return { worldCleared };
+  return { worldCleared, xpGained };
+}
+
+export function earnBadge(badgeId: string): void {
+  const progress = getProgress();
+  if (!progress.badges.includes(badgeId)) {
+    progress.badges.push(badgeId);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  }
 }
 
 function checkWorldCleared(progress: AppProgress, _slug: string): WorldId | null {

@@ -4,11 +4,15 @@ import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import Link from "next/link";
+import { XpBar } from "./XpBar";
+import { ShareButton } from "./ShareButton";
 
 interface LessonCompleteModalProps {
   show: boolean;
   lessonTitle: string;
   nextLessonSlug: string | null;
+  xpGained: number;
+  totalXp: number;
   onClose: () => void;
 }
 
@@ -16,6 +20,8 @@ export function LessonCompleteModal({
   show,
   lessonTitle,
   nextLessonSlug,
+  xpGained,
+  totalXp,
   onClose,
 }: LessonCompleteModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -127,9 +133,11 @@ export function LessonCompleteModal({
             >
               やったね!
             </h2>
-            <p className="mb-6" style={{ color: "var(--text-secondary)" }}>
+            <p className="mb-2" style={{ color: "var(--text-secondary)" }}>
               「{lessonTitle}」をクリアしたよ！
             </p>
+            <XpBar totalXp={totalXp} gained={xpGained} />
+            <div className="mb-4" />
             {nextLessonSlug ? (
               <div className="flex flex-col gap-3">
                 <Link
