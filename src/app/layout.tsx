@@ -14,9 +14,32 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const BASE_URL =
+  process.env.SITE_URL ?? "https://ichinomiya1038.github.io/pyodessey";
+
+const siteName = "PyOdessey";
+const defaultDescription =
+  "ブラウザだけでPythonを学べる無料の学習アプリ。冒険しながら33のレッスンでプログラミングの基礎から応用まで身につけよう！";
+
 export const metadata: Metadata = {
-  title: "PyOdessey - Python学習",
-  description: "ブラウザで動くPython学習Webアプリ",
+  metadataBase: new URL(BASE_URL),
+  title: {
+    default: `${siteName} - 冒険しながら学ぶPythonプログラミング`,
+    template: `%s - ${siteName}`,
+  },
+  description: defaultDescription,
+  openGraph: {
+    type: "website",
+    siteName,
+    locale: "ja_JP",
+    title: `${siteName} - 冒険しながら学ぶPythonプログラミング`,
+    description: defaultDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteName} - 冒険しながら学ぶPythonプログラミング`,
+    description: defaultDescription,
+  },
 };
 
 export default function RootLayout({
