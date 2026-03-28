@@ -44,6 +44,10 @@ next-env.d.ts
 .open-next/
 .wrangler/
 
+# generated lesson data
+src/lib/lessons-meta.json
+src/lib/lessons-content/
+
 # tools
 .playwright-mcp/
 

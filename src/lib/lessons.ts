@@ -1,10 +1,5 @@
 import { Lesson, LessonMeta, LessonChallenge } from "@/types/lesson";
-import lessonsData from "./lessons-data.json";
-
-interface RawLesson {
-  meta: Record<string, unknown>;
-  content: string;
-}
+import lessonsMeta from "./lessons-meta.json";
 
 function parseMeta(data: Record<string, unknown>): LessonMeta {
   const meta: LessonMeta = {
@@ -21,17 +16,27 @@ function parseMeta(data: Record<string, unknown>): LessonMeta {
 }
 
 export function getLessonSlugs(): string[] {
-  return (lessonsData as RawLesson[]).map((l) => l.meta.slug as string);
+  return (lessonsMeta as Record<string, unknown>[]).map(
+    (l) => l.slug as string
+  );
 }
 
 export function getAllLessons(): LessonMeta[] {
-  return (lessonsData as RawLesson[])
-    .map((l) => parseMeta(l.meta))
+  return (lessonsMeta as Record<string, unknown>[])
+    .map((l) => parseMeta(l))
     .sort((a, b) => a.order - b.order);
 }
 
 export function getLessonBySlug(slug: string): Lesson | null {
-  const found = (lessonsData as RawLesson[]).find((l) => l.meta.slug === slug);
-  if (!found) return null;
-  return { meta: parseMeta(found.meta), content: found.content };
+  // Dynamic import of individual lesson content file
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const data = require(`./lessons-content/${slug}.json`) as {
+      meta: Record<string, unknown>;
+      content: string;
+    };
+    return { meta: parseMeta(data.meta), content: data.content };
+  } catch {
+    return null;
+  }
 }
