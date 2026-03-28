@@ -48,6 +48,10 @@ next-env.d.ts
 src/lib/lessons-meta.json
 src/lib/lessons-content/
 
+# generated SEO files
+public/robots.txt
+public/sitemap.xml
+
 # tools
 .playwright-mcp/
 
