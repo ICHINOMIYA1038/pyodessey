@@ -8,9 +8,9 @@
     "build": "node scripts/generate-lessons.mjs && next build",
     "start": "next start",
     "lint": "eslint",
-    "cf:build": "npx opennextjs-cloudflare build",
-    "cf:dev": "npx opennextjs-cloudflare preview",
-    "cf:deploy": "npx opennextjs-cloudflare deploy"
+    "cf:build": "npm run build",
+    "cf:dev": "npx wrangler pages dev out",
+    "cf:deploy": "npx wrangler deploy"
   },
   "dependencies": {
     "@codemirror/lang-python": "^6.2.1",
