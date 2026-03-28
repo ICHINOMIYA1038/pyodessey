@@ -5,7 +5,7 @@
   "scripts": {
     "prebuild": "node scripts/generate-lessons.mjs",
     "dev": "node scripts/generate-lessons.mjs && next dev --port 3114",
-    "build": "node scripts/generate-lessons.mjs && next build",
+    "build": "node scripts/generate-lessons.mjs && next build && node scripts/postbuild.mjs",
     "start": "next start",
     "lint": "eslint",
     "cf:build": "npm run build",
