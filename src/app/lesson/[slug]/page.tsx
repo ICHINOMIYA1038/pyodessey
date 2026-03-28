@@ -3,7 +3,7 @@ import { getAllLessons, getLessonBySlug, getLessonSlugs } from "@/lib/lessons";
 import { LessonClient } from "./LessonClient";
 
 const BASE_URL =
-  process.env.SITE_URL ?? "https://ichinomiya1038.github.io/pyodessey";
+  process.env.SITE_URL ?? "https://nullstead.com/pyodessey";
 
 export async function generateStaticParams() {
   const slugs = getLessonSlugs();

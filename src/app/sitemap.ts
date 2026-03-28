@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllLessons } from "@/lib/lessons";
 
 const BASE_URL =
-  process.env.SITE_URL ?? "https://ichinomiya1038.github.io/pyodessey";
+  process.env.SITE_URL ?? "https://nullstead.com/pyodessey";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lessons = getAllLessons();

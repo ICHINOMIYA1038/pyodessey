@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 const BASE_URL =
-  process.env.SITE_URL ?? "https://ichinomiya1038.github.io/pyodessey";
+  process.env.SITE_URL ?? "https://nullstead.com/pyodessey";
 
 const siteName = "PyOdessey";
 const defaultDescription =

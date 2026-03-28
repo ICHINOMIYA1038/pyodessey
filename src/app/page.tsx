@@ -2,7 +2,7 @@ import { getAllLessons } from "@/lib/lessons";
 import { HomeClient } from "./HomeClient";
 
 const BASE_URL =
-  process.env.SITE_URL ?? "https://ichinomiya1038.github.io/pyodessey";
+  process.env.SITE_URL ?? "https://nullstead.com/pyodessey";
 
 export default function Home() {
   const lessons = getAllLessons();
