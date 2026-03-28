@@ -12,6 +12,7 @@ import { BadgeUnlockModal } from "@/components/effects/BadgeUnlockModal";
 import { ChallengeBlock } from "@/components/textbook/ChallengeBlock";
 import { useProgress } from "@/hooks/useProgress";
 import { checkNewBadges, BadgeDefinition } from "@/lib/badges";
+import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 import { Lesson, LessonMeta, WorldId } from "@/types/lesson";
 
 interface LessonClientProps {
@@ -113,6 +114,7 @@ export function LessonClient({ lesson, allLessons }: LessonClientProps) {
         <main id="main-content" className="flex-1">
           <SplitPane
             left={
+              <ErrorBoundary>
               <div className="flex h-full flex-col">
                 <div className="flex-1 overflow-hidden">
                   <TextbookPanel
@@ -150,8 +152,9 @@ export function LessonClient({ lesson, allLessons }: LessonClientProps) {
                   </div>
                 )}
               </div>
+              </ErrorBoundary>
             }
-            right={<EditorPanel />}
+            right={<ErrorBoundary><EditorPanel /></ErrorBoundary>}
           />
         </main>
       </div>

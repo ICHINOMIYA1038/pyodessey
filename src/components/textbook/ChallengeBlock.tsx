@@ -24,8 +24,10 @@ export function ChallengeBlock({ challenge, onPass }: ChallengeBlockProps) {
     if (!isReady || isRunning) return;
     execute(code).then((res) => {
       if (res && res.success) {
-        const output = (res.output ?? "").trimEnd();
-        const expected = challenge.expectedOutput.trimEnd();
+        const normalize = (s: string) =>
+          s.split("\n").map((line) => line.trimEnd()).join("\n").trim();
+        const output = normalize(res.output ?? "");
+        const expected = normalize(challenge.expectedOutput);
         if (output === expected) {
           setPassed(true);
           onPass();

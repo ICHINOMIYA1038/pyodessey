@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { PyodideProvider } from "@/contexts/PyodideContext";
+import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,7 +55,9 @@ export default function RootLayout({
             パソコンの大きな画面での利用をおすすめします。
           </p>
         </div>
-        <PyodideProvider>{children}</PyodideProvider>
+        <ErrorBoundary>
+          <PyodideProvider>{children}</PyodideProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

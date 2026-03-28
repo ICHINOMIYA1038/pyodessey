@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Panel, Group, Separator } from "react-resizable-panels";
 import { CodeEditor } from "./CodeEditor";
 import { RunButton } from "./RunButton";
@@ -14,6 +14,23 @@ print("Hello, Python!")
 export function EditorPanel() {
   const [code, setCode] = useState(DEFAULT_CODE);
   const { isReady, isRunning, result, execute, cancel } = usePyodide();
+  const hasEdited = useRef(false);
+
+  useEffect(() => {
+    if (code !== DEFAULT_CODE) {
+      hasEdited.current = true;
+    }
+  }, [code]);
+
+  useEffect(() => {
+    const handler = (e: BeforeUnloadEvent) => {
+      if (hasEdited.current) {
+        e.preventDefault();
+      }
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, []);
 
   const handleRun = useCallback(() => {
     if (isReady && !isRunning) {

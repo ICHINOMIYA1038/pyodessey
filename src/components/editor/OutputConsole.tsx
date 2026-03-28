@@ -33,7 +33,14 @@ export function OutputConsole({ result }: OutputConsoleProps) {
       }}
     >
       {result.output && (
-        <pre className="whitespace-pre-wrap" style={{ color: '#1a1a1a' }}>{result.output}</pre>
+        <div>
+          {hasSuccess && (
+            <span className="mb-1 block text-xs font-bold" style={{ color: '#16a34a' }}>
+              実行成功
+            </span>
+          )}
+          <pre className="whitespace-pre-wrap" style={{ color: '#1a1a1a' }}>{result.output}</pre>
+        </div>
       )}
       {result.isTruncated && (
         <div
@@ -48,7 +55,12 @@ export function OutputConsole({ result }: OutputConsoleProps) {
         </div>
       )}
       {result.error && (
-        <pre className="whitespace-pre-wrap" style={{ color: '#dc2626' }}>{result.error}</pre>
+        <div role="alert">
+          <span className="mb-1 block text-xs font-bold" style={{ color: '#dc2626' }}>
+            エラー
+          </span>
+          <pre className="whitespace-pre-wrap" style={{ color: '#dc2626' }}>{result.error}</pre>
+        </div>
       )}
       {result.isTimeout && (
         <div

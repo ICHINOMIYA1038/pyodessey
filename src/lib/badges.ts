@@ -1,4 +1,5 @@
 import { AppProgress } from "@/types/lesson";
+import { getAllLessons } from "./lessons";
 
 export interface BadgeDefinition {
   id: string;
@@ -7,6 +8,8 @@ export interface BadgeDefinition {
   emoji: string;
   condition: (progress: AppProgress) => boolean;
 }
+
+const TOTAL_LESSONS = getAllLessons().length;
 
 export const BADGES: BadgeDefinition[] = [
   // Milestone badges
@@ -43,7 +46,7 @@ export const BADGES: BadgeDefinition[] = [
     name: "でんせつのゆうしゃ",
     description: "すべてのレッスンをクリア",
     emoji: "👑",
-    condition: (p) => Object.values(p.lessons).filter((l) => l.completed).length >= 33,
+    condition: (p) => Object.values(p.lessons).filter((l) => l.completed).length >= TOTAL_LESSONS,
   },
   // World badges
   {
