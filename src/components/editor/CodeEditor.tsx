@@ -3,9 +3,11 @@
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { python } from "@codemirror/lang-python";
+import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { keymap } from "@codemirror/view";
 import type { Extension } from "@codemirror/state";
+import { useAppConfig } from "@/contexts/AppConfigContext";
 
 const ReactCodeMirror = dynamic(() => import("@uiw/react-codemirror"), {
   ssr: false,
@@ -31,8 +33,11 @@ export function CodeEditor({
   minHeight = "100px",
   onRun,
 }: CodeEditorProps) {
+  const { language } = useAppConfig();
+
   const extensions = useMemo(() => {
-    const exts: Extension[] = [python()];
+    const langExt = language === "JavaScript" ? javascript() : python();
+    const exts: Extension[] = [langExt];
     if (onRun) {
       exts.push(
         keymap.of([
@@ -47,7 +52,7 @@ export function CodeEditor({
       );
     }
     return exts;
-  }, [onRun]);
+  }, [onRun, language]);
 
   return (
     <div

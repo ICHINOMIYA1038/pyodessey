@@ -2,57 +2,84 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
-const LESSONS_DIR = path.join(process.cwd(), "content/lessons");
-const OUTPUT_META = path.join(process.cwd(), "src/lib/lessons-meta.json");
-const OUTPUT_CONTENT_DIR = path.join(process.cwd(), "src/lib/lessons-content");
+function generateLessons(lessonsDir, outputMeta, outputContentDir, label) {
+  if (!fs.existsSync(outputContentDir)) {
+    fs.mkdirSync(outputContentDir, { recursive: true });
+  }
 
-// Ensure content directory exists
-if (!fs.existsSync(OUTPUT_CONTENT_DIR)) {
-  fs.mkdirSync(OUTPUT_CONTENT_DIR, { recursive: true });
-}
+  if (!fs.existsSync(lessonsDir)) {
+    console.log(`No ${label} lessons directory found at ${lessonsDir}, skipping.`);
+    fs.writeFileSync(outputMeta, JSON.stringify([], null, 2));
+    return [];
+  }
 
-const files = fs.readdirSync(LESSONS_DIR).filter((f) => f.endsWith(".md"));
+  const files = fs.readdirSync(lessonsDir).filter((f) => f.endsWith(".md"));
+  const metaList = [];
 
-const metaList = [];
+  for (const f of files) {
+    const raw = fs.readFileSync(path.join(lessonsDir, f), "utf-8");
+    const { data, content } = matter(raw);
+    metaList.push(data);
+    const slug = data.slug;
+    fs.writeFileSync(
+      path.join(outputContentDir, `${slug}.json`),
+      JSON.stringify({ meta: data, content })
+    );
+  }
 
-for (const f of files) {
-  const raw = fs.readFileSync(path.join(LESSONS_DIR, f), "utf-8");
-  const { data, content } = matter(raw);
-
-  // Save metadata (lightweight)
-  metaList.push(data);
-
-  // Save individual content file by slug
-  const slug = data.slug;
-  fs.writeFileSync(
-    path.join(OUTPUT_CONTENT_DIR, `${slug}.json`),
-    JSON.stringify({ meta: data, content })
+  fs.writeFileSync(outputMeta, JSON.stringify(metaList, null, 2));
+  console.log(
+    `Generated ${metaList.length} ${label} lessons: meta → ${outputMeta}, content → ${outputContentDir}/`
   );
+  return metaList;
 }
 
-fs.writeFileSync(OUTPUT_META, JSON.stringify(metaList, null, 2));
-console.log(
-  `Generated ${metaList.length} lessons: meta → ${OUTPUT_META}, content → ${OUTPUT_CONTENT_DIR}/`
+// Python lessons
+const pyMeta = generateLessons(
+  path.join(process.cwd(), "content/lessons"),
+  path.join(process.cwd(), "src/lib/lessons-meta.json"),
+  path.join(process.cwd(), "src/lib/lessons-content"),
+  "Python"
+);
+
+// JavaScript lessons
+const jsMeta = generateLessons(
+  path.join(process.cwd(), "content/js-lessons"),
+  path.join(process.cwd(), "src/lib/js-lessons-meta.json"),
+  path.join(process.cwd(), "src/lib/js-lessons-content"),
+  "JavaScript"
 );
 
 // Generate robots.txt and sitemap.xml into public/
-const BASE_URL = process.env.SITE_URL ?? "https://nullstead.com/pyodessey";
+const SITE_URL = process.env.SITE_URL ?? "https://nullstead.com";
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 
 const robotsTxt = `User-agent: *
 Allow: /
 
-Sitemap: ${BASE_URL}/sitemap.xml
+Sitemap: ${SITE_URL}/pyodessey/sitemap.xml
+Sitemap: ${SITE_URL}/jsodessey/sitemap.xml
 `;
 fs.writeFileSync(path.join(PUBLIC_DIR, "robots.txt"), robotsTxt);
 
-const sortedMeta = [...metaList].sort((a, b) => a.order - b.order);
-const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+const sortedPyMeta = [...pyMeta].sort((a, b) => a.order - b.order);
+const pySitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>${BASE_URL}</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>${BASE_URL}/sandbox</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-${sortedMeta.map((l) => `  <url><loc>${BASE_URL}/lesson/${l.slug}</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>`).join("\n")}
+  <url><loc>${SITE_URL}/pyodessey</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>${SITE_URL}/pyodessey/sandbox</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+${sortedPyMeta.map((l) => `  <url><loc>${SITE_URL}/pyodessey/lesson/${l.slug}</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>`).join("\n")}
 </urlset>
 `;
-fs.writeFileSync(path.join(PUBLIC_DIR, "sitemap.xml"), sitemapXml);
-console.log("Generated robots.txt and sitemap.xml → public/");
+fs.writeFileSync(path.join(PUBLIC_DIR, "sitemap.xml"), pySitemapXml);
+
+const sortedJsMeta = [...jsMeta].sort((a, b) => a.order - b.order);
+const jsSitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>${SITE_URL}/jsodessey</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>${SITE_URL}/jsodessey/sandbox</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+${sortedJsMeta.map((l) => `  <url><loc>${SITE_URL}/jsodessey/lesson/${l.slug}</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>`).join("\n")}
+</urlset>
+`;
+fs.writeFileSync(path.join(PUBLIC_DIR, "js-sitemap.xml"), jsSitemapXml);
+
+console.log("Generated robots.txt and sitemaps → public/");

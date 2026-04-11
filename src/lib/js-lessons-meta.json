@@ -1,0 +1,564 @@
+[
+  {
+    "title": "変数ってなに？",
+    "slug": "variables",
+    "order": 1,
+    "description": "宝箱に名前をつけよう",
+    "world": "forest",
+    "challenge": {
+      "description": "変数 x に 5 を入れて、x * 3 の結果を表示しよう！",
+      "starterCode": "// 変数 x を作って 5 を入れよう\n\n// x * 3 の結果を console.log で表示しよう\n",
+      "expectedOutput": "15",
+      "hints": [
+        "let x = 5; で変数を作ろう",
+        "console.log(x * 3); で結果を表示しよう"
+      ]
+    }
+  },
+  {
+    "title": "数と文字",
+    "slug": "numbers-and-strings",
+    "order": 2,
+    "description": "数字と言葉をあやつろう",
+    "world": "forest",
+    "challenge": {
+      "description": "変数 name に \"ゆうしゃ\" を入れて「こんにちは、ゆうしゃ！」と表示しよう！",
+      "starterCode": "// 変数 name に \"ゆうしゃ\" を入れよう\n\n// テンプレートリテラルで表示しよう\n",
+      "expectedOutput": "こんにちは、ゆうしゃ！",
+      "hints": [
+        "let name = \"ゆうしゃ\"; で変数を作ろう",
+        "console.log(`こんにちは、${name}！`); と書いてみよう"
+      ]
+    }
+  },
+  {
+    "title": "条件分岐",
+    "slug": "conditions",
+    "order": 3,
+    "description": "もしも…のとき",
+    "world": "forest",
+    "challenge": {
+      "description": "変数 score が 80 以上なら「合格！」、そうでなければ「もう少し！」と表示しよう。score は 85 にしてね。",
+      "starterCode": "let score = 85;\n\n// if文を書こう\n",
+      "expectedOutput": "合格！",
+      "hints": [
+        "if (score >= 80) と書こう",
+        "else を使って「もう少し！」も表示できるようにしよう"
+      ]
+    }
+  },
+  {
+    "title": "繰り返し",
+    "slug": "loops",
+    "order": 4,
+    "description": "何度もやってみよう",
+    "world": "forest",
+    "challenge": {
+      "description": "1から10までの合計を計算して表示しよう！",
+      "starterCode": "let total = 0;\n\n// for文で1から10まで足そう\n\n// 合計を表示しよう\n",
+      "expectedOutput": "55",
+      "hints": [
+        "for (let i = 1; i <= 10; i++) と書こう",
+        "ループの中で total = total + i; または total += i; としよう",
+        "ループの後で console.log(total); で表示しよう"
+      ]
+    }
+  },
+  {
+    "title": "配列",
+    "slug": "arrays",
+    "order": 5,
+    "description": "アイテムを並べよう",
+    "world": "forest",
+    "challenge": {
+      "description": "配列 [3, 1, 4, 1, 5] の合計を計算して表示しよう！",
+      "starterCode": "let numbers = [3, 1, 4, 1, 5];\nlet total = 0;\n\n// for...of で合計を計算しよう\n\n// 合計を表示しよう\n",
+      "expectedOutput": "14",
+      "hints": [
+        "for (let num of numbers) でひとつずつ取り出そう",
+        "total += num; で足していこう",
+        "ループの後で console.log(total); しよう"
+      ]
+    }
+  },
+  {
+    "title": "文字列操作",
+    "slug": "string-operations",
+    "order": 6,
+    "description": "言葉を自由にあやつろう",
+    "world": "forest",
+    "challenge": {
+      "description": "\"hello world\" を split して reverse して join しよう！",
+      "starterCode": "let text = \"hello world\";\n\n// split で単語に分けて、reverse で逆にして、join でつなげよう\n",
+      "expectedOutput": "world hello",
+      "hints": [
+        "let words = text.split(\" \"); で単語に分けよう",
+        "words.reverse(); で順番を逆にしよう",
+        "console.log(words.join(\" \")); でスペースでつなげて表示しよう"
+      ]
+    }
+  },
+  {
+    "title": "オブジェクト",
+    "slug": "objects",
+    "order": 7,
+    "description": "冒険者のデータをまとめよう",
+    "world": "town",
+    "challenge": {
+      "description": "オブジェクト hero を作り hero.name を表示しよう",
+      "starterCode": "let hero = { name: \"ゆうしゃ\", hp: 100 };\n// hero.name を表示しよう\n",
+      "expectedOutput": "ゆうしゃ",
+      "hints": [
+        "console.log(hero.name); でプロパティを表示できるよ",
+        "ドット（.）でオブジェクトの中身にアクセスしよう"
+      ]
+    }
+  },
+  {
+    "title": "関数",
+    "slug": "functions",
+    "order": 8,
+    "description": "魔法の呪文を作ろう",
+    "world": "town",
+    "challenge": {
+      "description": "2つの数を受け取って合計を返す関数 add を作ろう",
+      "starterCode": "// 関数 add を作ろう\n\n// add(3, 7) を表示\n",
+      "expectedOutput": "10",
+      "hints": [
+        "function add(a, b) { ... } で関数を作ろう",
+        "return a + b; で合計を返そう",
+        "console.log(add(3, 7)); で結果を表示しよう"
+      ]
+    }
+  },
+  {
+    "title": "アロー関数とコールバック",
+    "slug": "arrow-functions",
+    "order": 9,
+    "description": "もっとスマートに書こう",
+    "world": "town",
+    "challenge": {
+      "description": "配列 [1,2,3,4,5] から偶数だけ取り出して表示しよう",
+      "starterCode": "let numbers = [1, 2, 3, 4, 5];\n// filter で偶数だけ取り出して表示しよう\n",
+      "expectedOutput": "2,4",
+      "hints": [
+        "numbers.filter() を使おう",
+        "n % 2 === 0 で偶数かどうか判定できるよ",
+        "console.log(numbers.filter(n => n % 2 === 0).join(\",\")); で表示しよう"
+      ]
+    }
+  },
+  {
+    "title": "エラー処理",
+    "slug": "error-handling",
+    "order": 10,
+    "description": "失敗してもだいじょうぶ",
+    "world": "town",
+    "challenge": {
+      "description": "try-catch で JSON.parse(\"not json\") のエラーをキャッチして「エラーをキャッチ！」と表示しよう",
+      "starterCode": "// try-catch を使おう\n",
+      "expectedOutput": "エラーをキャッチ！",
+      "hints": [
+        "try { ... } catch (e) { ... } の形で書こう",
+        "try の中で JSON.parse(\"not json\") を実行しよう",
+        "catch の中で console.log(\"エラーをキャッチ！\"); と書こう"
+      ]
+    }
+  },
+  {
+    "title": "スコープとクロージャ",
+    "slug": "scope-closures",
+    "order": 11,
+    "description": "変数の見える範囲",
+    "world": "town",
+    "challenge": {
+      "description": "createCounter関数を作ってカウンターを2回呼んで表示しよう",
+      "starterCode": "// createCounter 関数を作ろう\n\n// let counter = createCounter();\n// console.log(counter());\n// console.log(counter());\n",
+      "expectedOutput": "1\n2",
+      "hints": [
+        "createCounter の中で let count = 0; を作ろう",
+        "内側の関数で count を1増やして return しよう",
+        "return function() { count++; return count; }; で完成！"
+      ]
+    }
+  },
+  {
+    "title": "配列メソッド",
+    "slug": "array-methods",
+    "order": 12,
+    "description": "データを自在にあやつろう",
+    "world": "mountain",
+    "challenge": {
+      "description": "[10, 25, 30, 5, 15] から 10以上を filter して reduce で合計しよう！",
+      "starterCode": "let values = [10, 25, 30, 5, 15];\n// filter と reduce を使おう\n",
+      "expectedOutput": "80",
+      "hints": [
+        "values.filter(v => v >= 10) で10以上を取り出そう",
+        "filter した結果に .reduce((sum, v) => sum + v, 0) をつなげよう",
+        "console.log(結果); で表示しよう"
+      ]
+    }
+  },
+  {
+    "title": "分割代入",
+    "slug": "destructuring",
+    "order": 13,
+    "description": "まとめてバラバラに取り出そう",
+    "world": "mountain",
+    "challenge": {
+      "description": "オブジェクトから name と level を取り出して表示しよう！",
+      "starterCode": "let hero = { name: \"ゆうしゃ\", level: 10, hp: 100 };\n// 分割代入で name と level を取り出そう\n// console.log(`${name} Lv.${level}`);\n",
+      "expectedOutput": "ゆうしゃ Lv.10",
+      "hints": [
+        "let { name, level } = hero; で取り出せるよ",
+        "オブジェクトの分割代入は { } を使うよ",
+        "取り出した後は普通の変数として使えるよ"
+      ]
+    }
+  },
+  {
+    "title": "スプレッドとレスト",
+    "slug": "spread-rest",
+    "order": 14,
+    "description": "広げたり集めたり",
+    "world": "mountain",
+    "challenge": {
+      "description": "2つの配列 [1,2,3] と [4,5,6] をスプレッドで結合して表示しよう！",
+      "starterCode": "let a = [1, 2, 3];\nlet b = [4, 5, 6];\n// スプレッドで結合しよう\n",
+      "expectedOutput": "1,2,3,4,5,6",
+      "hints": [
+        "let combined = [...a, ...b]; でスプレッドを使おう",
+        "console.log(combined.toString()); で表示しよう",
+        "toString() は配列をカンマ区切りの文字列にするよ"
+      ]
+    }
+  },
+  {
+    "title": "DOM入門",
+    "slug": "dom-basics",
+    "order": 15,
+    "description": "画面を自由にあやつろう",
+    "world": "mountain",
+    "challenge": {
+      "description": "app.innerHTML で <h1>冒険スタート！</h1> を表示し、console.log(\"準備完了\") と表示しよう！",
+      "starterCode": "// app に h1 タグを表示しよう\n// console.log で \"準備完了\" と表示しよう\n",
+      "expectedOutput": "準備完了",
+      "hints": [
+        "app.innerHTML = \"<h1>冒険スタート！</h1>\"; で HTML を表示できるよ",
+        "console.log(\"準備完了\"); で出力しよう",
+        "app は最初から使えるグローバル変数だよ"
+      ]
+    }
+  },
+  {
+    "title": "イベント処理",
+    "slug": "events",
+    "order": 16,
+    "description": "クリックで魔法を発動しよう",
+    "world": "mountain",
+    "challenge": {
+      "description": "ボタンを作ってクリックカウンターを設置し、console.log(\"イベント設定完了\") と表示しよう！",
+      "starterCode": "// ボタンを作ってカウンターを設定しよう\n// console.log(\"イベント設定完了\") と表示しよう\n",
+      "expectedOutput": "イベント設定完了",
+      "hints": [
+        "let btn = document.createElement(\"button\"); でボタンを作ろう",
+        "btn.addEventListener(\"click\", function() { ... }); でクリック処理を追加しよう",
+        "最後に console.log(\"イベント設定完了\"); を忘れずに！"
+      ]
+    }
+  },
+  {
+    "title": "高階関数",
+    "slug": "higher-order-functions",
+    "order": 17,
+    "description": "関数を関数に渡そう",
+    "world": "castle",
+    "challenge": {
+      "description": "compose(double, addOne)(3) を計算して表示しよう！composeは右から適用するよ。",
+      "starterCode": "// double（2倍する関数）を作ろう\n\n// addOne（1を足す関数）を作ろう\n\n// compose（右から適用する関数）を作ろう\n\n// console.log(compose(double, addOne)(3));\n",
+      "expectedOutput": "8",
+      "hints": [
+        "function double(x) { return x * 2; } で2倍の関数を作ろう",
+        "function addOne(x) { return x + 1; } で+1の関数を作ろう",
+        "compose(f, g) は function(x) { return f(g(x)); } を返す関数だよ",
+        "compose(double, addOne)(3) → double(addOne(3)) → double(4) → 8"
+      ]
+    }
+  },
+  {
+    "title": "正規表現",
+    "slug": "regex",
+    "order": 18,
+    "description": "文字列の中を探検しよう",
+    "world": "castle",
+    "challenge": {
+      "description": "文字列 \"HP:100 MP:50 ATK:30\" から数字だけ取り出して合計を表示しよう！",
+      "starterCode": "let text = \"HP:100 MP:50 ATK:30\";\n\n// 正規表現で数字を取り出して合計しよう\n",
+      "expectedOutput": "180",
+      "hints": [
+        "text.match(/\\d+/g) で数字をすべて取り出せるよ",
+        "match の結果は文字列の配列だから Number() で数値に変換しよう",
+        "reduce を使って合計を計算しよう",
+        "console.log(text.match(/\\d+/g).map(Number).reduce((a,b) => a+b, 0));"
+      ]
+    }
+  },
+  {
+    "title": "MapとSet",
+    "slug": "map-set",
+    "order": 19,
+    "description": "特別なコレクション",
+    "world": "castle",
+    "challenge": {
+      "description": "配列 [1, 2, 2, 3, 3, 3, 4] からSetで重複を除いてサイズを表示しよう！",
+      "starterCode": "let numbers = [1, 2, 2, 3, 3, 3, 4];\n\n// Set を使って重複を除こう\n",
+      "expectedOutput": "4",
+      "hints": [
+        "new Set(numbers) で配列から Set を作れるよ",
+        "Set の .size プロパティで要素の数がわかるよ",
+        "console.log(new Set(numbers).size); で答えが出るよ"
+      ]
+    }
+  },
+  {
+    "title": "イテレータとジェネレータ",
+    "slug": "iterators-generators",
+    "order": 20,
+    "description": "一つずつ取り出す魔法",
+    "world": "castle",
+    "challenge": {
+      "description": "range(1, 5) ジェネレータを作って [...range(1, 5)] を表示しよう！",
+      "starterCode": "// range ジェネレータを作ろう\n\n// console.log([...range(1, 5)].join(\",\"));\n",
+      "expectedOutput": "1,2,3,4,5",
+      "hints": [
+        "function* range(start, end) { ... } でジェネレータ関数を作ろう",
+        "for ループで start から end まで yield しよう",
+        "while (start <= end) { yield start; start++; } でもOK",
+        "[...range(1, 5)] でジェネレータを配列に変換できるよ"
+      ]
+    }
+  },
+  {
+    "title": "アルゴリズム入門",
+    "slug": "algorithms",
+    "order": 21,
+    "description": "効率よく問題を解こう",
+    "world": "castle",
+    "challenge": {
+      "description": "binarySearch([1, 3, 5, 7, 9, 11], 7) でインデックスを表示しよう！",
+      "starterCode": "// binarySearch 関数を作ろう\n\n// console.log(binarySearch([1, 3, 5, 7, 9, 11], 7));\n",
+      "expectedOutput": "3",
+      "hints": [
+        "let low = 0, high = arr.length - 1; で範囲を決めよう",
+        "let mid = Math.floor((low + high) / 2); で真ん中を求めよう",
+        "arr[mid] === target なら mid を返す、小さければ low = mid + 1、大きければ high = mid - 1",
+        "while (low <= high) のループで繰り返そう"
+      ]
+    }
+  },
+  {
+    "title": "JSONデータ",
+    "slug": "json",
+    "order": 22,
+    "description": "データを保存・読み込もう",
+    "world": "sea",
+    "challenge": {
+      "description": "オブジェクトをJSON文字列にしてパースし直してnameを表示しよう",
+      "starterCode": "let hero = { name: \"ゆうしゃ\", level: 10 };\n// JSON.stringify → JSON.parse → name を表示\n",
+      "expectedOutput": "ゆうしゃ",
+      "hints": [
+        "JSON.stringify(hero) でオブジェクトを文字列にできるよ",
+        "JSON.parse(文字列) で文字列をオブジェクトに戻せるよ",
+        "戻したオブジェクトの .name を console.log で表示しよう"
+      ]
+    }
+  },
+  {
+    "title": "便利なパターン",
+    "slug": "useful-patterns",
+    "order": 23,
+    "description": "プロの技を学ぼう",
+    "world": "sea",
+    "challenge": {
+      "description": "optional chaining で存在しないプロパティを安全にアクセスしよう",
+      "starterCode": "let data = { user: { name: \"太郎\" } };\n// data.user.address?.city が undefined なら \"なし\" と表示\n",
+      "expectedOutput": "なし",
+      "hints": [
+        "data.user.address?.city で安全にアクセスできるよ",
+        "?? 演算子を使って undefined のとき代わりの値を返そう",
+        "console.log(data.user.address?.city ?? \"なし\"); で完成！"
+      ]
+    }
+  },
+  {
+    "title": "データ処理",
+    "slug": "data-processing",
+    "order": 24,
+    "description": "大量のデータをさばこう",
+    "world": "sea",
+    "challenge": {
+      "description": "モンスター配列から hp の平均値を計算して表示しよう",
+      "starterCode": "let monsters = [\n  { name: \"スライム\", hp: 30 },\n  { name: \"ゴブリン\", hp: 50 },\n  { name: \"ドラゴン\", hp: 100 },\n];\n// hp の平均を計算しよう\n",
+      "expectedOutput": "60",
+      "hints": [
+        "reduce で hp の合計を求めよう",
+        "合計を monsters.length で割ると平均が出るよ",
+        "console.log(average); で表示しよう"
+      ]
+    }
+  },
+  {
+    "title": "テキスト処理",
+    "slug": "text-processing",
+    "order": 25,
+    "description": "文章を分析しよう",
+    "world": "sea",
+    "challenge": {
+      "description": "文字列の単語数をカウントして表示しよう",
+      "starterCode": "let text = \"the quick brown fox jumps\";\n// 単語の数を数えよう\n",
+      "expectedOutput": "5",
+      "hints": [
+        "split(\" \") でスペース区切りの配列にしよう",
+        "配列の .length で単語数がわかるよ",
+        "console.log(words.length); で表示しよう"
+      ]
+    }
+  },
+  {
+    "title": "Canvas入門",
+    "slug": "canvas",
+    "order": 26,
+    "description": "絵を描こう",
+    "world": "sea",
+    "challenge": {
+      "description": "Canvas に赤い円を描いて console.log(\"描画完了\") と表示しよう",
+      "starterCode": "showCanvas();\nconst ctx = canvas.getContext(\"2d\");\n\n// 赤い円を描こう\n// ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.fill();\n\nconsole.log(\"描画完了\");\n",
+      "expectedOutput": "描画完了",
+      "hints": [
+        "ctx.fillStyle = \"red\"; で色を赤にしよう",
+        "ctx.beginPath() でパスを始めて、ctx.arc(200, 200, 50, 0, Math.PI * 2) で円を作ろう",
+        "ctx.fill() で塗りつぶそう"
+      ]
+    }
+  },
+  {
+    "title": "五目並べを作ろう",
+    "slug": "gomoku",
+    "order": 27,
+    "description": "本格ゲームに挑戦",
+    "world": "sea",
+    "challenge": {
+      "description": "五目並べの盤面を描画して console.log(\"ゲーム準備完了\") と表示しよう",
+      "starterCode": "showCanvas();\nconst ctx = canvas.getContext(\"2d\");\n\n// 9x9の盤面を描こう\n\nconsole.log(\"ゲーム準備完了\");\n",
+      "expectedOutput": "ゲーム準備完了",
+      "hints": [
+        "まず背景を ctx.fillStyle と ctx.fillRect で塗ろう",
+        "for ループで縦線と横線を描こう",
+        "ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); で線が引けるよ"
+      ]
+    }
+  },
+  {
+    "title": "再帰",
+    "slug": "recursion",
+    "order": 28,
+    "description": "自分自身を呼ぶ魔法",
+    "world": "sky",
+    "challenge": {
+      "description": "factorial 関数を作って、factorial(6) の結果を表示しよう",
+      "starterCode": "// factorial 関数を作ろう\n\n// console.log(factorial(6));\n",
+      "expectedOutput": "720",
+      "hints": [
+        "function factorial(n) { ... } で関数を作ろう",
+        "n が 0 か 1 なら 1 を返すのがベースケースだよ",
+        "それ以外は n * factorial(n - 1) を返そう"
+      ]
+    }
+  },
+  {
+    "title": "スタックとキュー",
+    "slug": "stack-queue",
+    "order": 29,
+    "description": "データの出し入れ",
+    "world": "sky",
+    "challenge": {
+      "description": "括弧の対応チェック関数 isValid を作って、isValid(\"({[]})\") の結果を表示しよう",
+      "starterCode": "// isValid 関数を作ろう\n\n// console.log(isValid(\"({[]})\"));\n",
+      "expectedOutput": "true",
+      "hints": [
+        "スタック（配列）を使って開き括弧を push しよう",
+        "閉じ括弧が来たら pop して対応をチェックしよう",
+        "最後にスタックが空なら true だよ"
+      ]
+    }
+  },
+  {
+    "title": "木構造",
+    "slug": "tree",
+    "order": 30,
+    "description": "枝分かれするデータ",
+    "world": "sky",
+    "challenge": {
+      "description": "二分探索木に [5,3,7,1,4] を挿入して、中順走査（inorder）で表示しよう",
+      "starterCode": "// BinaryTree クラスを作ろう\n\n// let tree = new BinaryTree();\n// [5, 3, 7, 1, 4].forEach(n => tree.insert(n));\n// console.log(tree.inorder().join(\",\"));\n",
+      "expectedOutput": "1,3,4,5,7",
+      "hints": [
+        "TreeNode クラスに value, left, right を持たせよう",
+        "insert では値が小さければ左、大きければ右に進むよ",
+        "inorder は 左 → 自分 → 右 の順で配列に追加しよう"
+      ]
+    }
+  },
+  {
+    "title": "グラフ探索",
+    "slug": "graph",
+    "order": 31,
+    "description": "つながりをたどろう",
+    "world": "sky",
+    "challenge": {
+      "description": "Graph クラスと BFS を作って、\"A\" から \"D\" への最短経路の長さを表示しよう",
+      "starterCode": "// Graph クラスと BFS を作ろう\n// グラフ: A-B, A-C, B-D, C-D\n\n// let g = new Graph();\n// [\"A\",\"B\",\"C\",\"D\"].forEach(v => g.addVertex(v));\n// g.addEdge(\"A\",\"B\");\n// g.addEdge(\"A\",\"C\");\n// g.addEdge(\"B\",\"D\");\n// g.addEdge(\"C\",\"D\");\n// console.log(g.bfsDistance(\"A\", \"D\"));\n",
+      "expectedOutput": "2",
+      "hints": [
+        "隣接リストは Object を使い、各頂点に配列を持たせよう",
+        "BFS はキュー（配列 + push/shift）で実装しよう",
+        "距離を記録する Object を作って、訪問済みチェックにも使おう"
+      ]
+    }
+  },
+  {
+    "title": "動的計画法",
+    "slug": "dp",
+    "order": 32,
+    "description": "賢く問題を解こう",
+    "world": "sky",
+    "challenge": {
+      "description": "階段問題: n段を1段か2段で登る方法の数を求める climbStairs(6) を表示しよう",
+      "starterCode": "// climbStairs 関数を作ろう\n\n// console.log(climbStairs(6));\n",
+      "expectedOutput": "13",
+      "hints": [
+        "1段の登り方は1通り、2段は2通りがベースケースだよ",
+        "n段 = (n-1)段の方法 + (n-2)段の方法 で計算できるよ",
+        "配列を使って下から順に計算しよう（ボトムアップ）"
+      ]
+    }
+  },
+  {
+    "title": "最終チャレンジ",
+    "slug": "final-challenge",
+    "order": 33,
+    "description": "すべての力を結集せよ",
+    "world": "sky",
+    "challenge": {
+      "description": "レベル20以上の勇者の名前をアルファベット順に並べて表示しよう",
+      "starterCode": "let heroes = [\n  { name: \"ボブ\", level: 25, skills: [\"剣術\"] },\n  { name: \"アリス\", level: 30, skills: [\"魔法\", \"回復\"] },\n  { name: \"チャーリー\", level: 15, skills: [\"弓術\"] },\n];\n// レベル20以上の勇者の名前をアルファベット順に表示しよう\n",
+      "expectedOutput": "アリス, ボブ",
+      "hints": [
+        "filter で level >= 20 のものだけ取り出そう",
+        "map で名前だけの配列にしよう",
+        "sort() でアルファベット順に並べよう",
+        "join(\", \") で文字列にして console.log しよう"
+      ]
+    }
+  }
+]

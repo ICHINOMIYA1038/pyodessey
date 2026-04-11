@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useRef, useState, useCallback } from "react";
 import { PyodideAPI } from "@/lib/pyodide-api";
 import { PyodideResult } from "@/types/pyodide";
+import { CodeRunnerProvider } from "./CodeRunnerContext";
 
 interface PyodideContextValue {
   isReady: boolean;
@@ -94,6 +95,16 @@ export function PyodideProvider({ children }: { children: React.ReactNode }) {
       });
   }, []);
 
+  const codeRunnerValue = {
+    isReady,
+    isLoading,
+    isReinitializing,
+    error,
+    runCode: runPython,
+    cancelExecution,
+    retryInit,
+  };
+
   return (
     <PyodideContext.Provider
       value={{
@@ -106,7 +117,9 @@ export function PyodideProvider({ children }: { children: React.ReactNode }) {
         retryInit,
       }}
     >
-      {children}
+      <CodeRunnerProvider value={codeRunnerValue}>
+        {children}
+      </CodeRunnerProvider>
     </PyodideContext.Provider>
   );
 }

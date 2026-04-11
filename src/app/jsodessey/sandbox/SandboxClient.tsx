@@ -7,25 +7,27 @@ import { CodeEditor } from "@/components/editor/CodeEditor";
 import { RunButton } from "@/components/editor/RunButton";
 import { OutputConsole } from "@/components/editor/OutputConsole";
 import { usePyodide } from "@/hooks/usePyodide";
+import { useAppConfig } from "@/contexts/AppConfigContext";
 
 const TEMPLATES = [
-  { label: "Hello World", code: 'print("Hello, World!")' },
-  { label: "たし算", code: "a = 3\nb = 5\nprint(a + b)" },
-  { label: "for ループ", code: 'for i in range(5):\n    print(f"{i}ばんめ")' },
-  { label: "リスト", code: 'fruits = ["りんご", "みかん", "ぶどう"]\nfor f in fruits:\n    print(f)' },
-  { label: "かんすう", code: 'def greet(name):\n    return f"こんにちは、{name}！"\n\nprint(greet("パイソン"))' },
-  { label: "じしょ", code: 'scores = {"国語": 80, "算数": 95, "理科": 70}\nfor subject, score in scores.items():\n    print(f"{subject}: {score}点")' },
+  { label: "Hello World", code: 'console.log("Hello, World!");' },
+  { label: "たし算", code: "let a = 3;\nlet b = 5;\nconsole.log(a + b);" },
+  { label: "for ループ", code: 'for (let i = 0; i < 5; i++) {\n  console.log(`${i}ばんめ`);\n}' },
+  { label: "配列", code: 'const fruits = ["りんご", "みかん", "ぶどう"];\nfor (const f of fruits) {\n  console.log(f);\n}' },
+  { label: "関数", code: 'function greet(name) {\n  return `こんにちは、${name}！`;\n}\n\nconsole.log(greet("ジャバスクリプト"));' },
+  { label: "オブジェクト", code: 'const scores = { 国語: 80, 算数: 95, 理科: 70 };\nfor (const [subject, score] of Object.entries(scores)) {\n  console.log(`${subject}: ${score}点`);\n}' },
 ];
 
-const DEFAULT_CODE = `# 自由にPythonコードを書いてみよう！
-# 「▶ 実行」ボタンでコードを動かせるよ
+const DEFAULT_CODE = `// 自由にJavaScriptコードを書いてみよう！
+// 「▶ 実行」ボタンでコードを動かせるよ
 
-print("こんにちは、Python！")
+console.log("こんにちは、JavaScript！");
 `;
 
 export function SandboxClient() {
   const [code, setCode] = useState(DEFAULT_CODE);
   const { isReady, isRunning, result, execute, cancel } = usePyodide();
+  const { prefix, language } = useAppConfig();
 
   const handleRun = useCallback(() => {
     if (isReady && !isRunning) {
@@ -39,7 +41,6 @@ export function SandboxClient() {
 
   return (
     <div className="flex h-screen flex-col" style={{ background: "var(--surface-0)" }}>
-      {/* Header */}
       <header
         className="flex items-center justify-between px-4 py-2.5"
         style={{
@@ -49,7 +50,7 @@ export function SandboxClient() {
       >
         <div className="flex items-center gap-3">
           <Link
-            href="/"
+            href={prefix}
             className="flex items-center gap-1 rounded-md px-2 py-1 text-sm transition-colors"
             style={{ color: "var(--text-secondary)" }}
             onMouseEnter={(e) => {
@@ -73,7 +74,7 @@ export function SandboxClient() {
           {!isReady && (
             <span className="flex items-center gap-1.5 text-xs text-yellow-600">
               <Loader2 className="h-3.5 w-3.5 animate-spin" />
-              Pythonをよみこみ中...
+              {language}をよみこみ中...
             </span>
           )}
           {isReady && (
@@ -91,7 +92,6 @@ export function SandboxClient() {
         </div>
       </header>
 
-      {/* Template buttons */}
       <div
         className="flex items-center gap-2 overflow-x-auto px-4 py-2"
         style={{
@@ -126,7 +126,6 @@ export function SandboxClient() {
         ))}
       </div>
 
-      {/* Editor + Output */}
       <div className="flex flex-1 flex-col overflow-hidden">
         <div className="flex-1 overflow-hidden" style={{ minHeight: 0 }}>
           <CodeEditor value={code} onChange={setCode} onRun={handleRun} />

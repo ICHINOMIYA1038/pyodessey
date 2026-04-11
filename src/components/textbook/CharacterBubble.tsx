@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useAppConfig } from "@/contexts/AppConfigContext";
 
 interface CharacterBubbleProps {
   character: "sensei" | "student";
@@ -144,7 +145,70 @@ function StudentAvatar() {
   );
 }
 
-const config = {
+function JsSenseiAvatar() {
+  return (
+    <svg width="56" height="56" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Shadow */}
+      <ellipse cx="40" cy="72" rx="18" ry="4" fill="#eab308" opacity="0.15" />
+
+      {/* Lightning tail */}
+      <path d="M52 58 Q60 50 56 42 Q54 36 50 40" stroke="#eab308" strokeWidth="5" fill="none" strokeLinecap="round" />
+      <path d="M52 58 Q60 50 56 42 Q54 36 50 40" stroke="#facc15" strokeWidth="3" fill="none" strokeLinecap="round" />
+
+      {/* Body */}
+      <ellipse cx="40" cy="56" rx="16" ry="10" fill="#eab308" />
+      <ellipse cx="40" cy="57" rx="12" ry="7" fill="#facc15" />
+      <ellipse cx="40" cy="58" rx="9" ry="5" fill="#fde68a" />
+
+      {/* Head */}
+      <circle cx="40" cy="32" r="22" fill="#eab308" />
+      <circle cx="40" cy="32" r="20" fill="#facc15" />
+
+      {/* Face area */}
+      <ellipse cx="40" cy="36" rx="14" ry="12" fill="#fde68a" />
+
+      {/* Graduation cap */}
+      <rect x="25" y="11" width="30" height="4" rx="1" fill="#1a1a2e" />
+      <polygon points="40,5 25,13 55,13" fill="#1a1a2e" />
+      <rect x="38" y="5" width="4" height="3" rx="1" fill="#f97316" />
+      {/* Tassel */}
+      <line x1="52" y1="13" x2="56" y2="20" stroke="#f97316" strokeWidth="1.5" />
+      <circle cx="56" cy="21" r="2" fill="#f97316" />
+
+      {/* JS logo on cap */}
+      <text x="36" y="12" fontSize="6" fontWeight="bold" fill="#facc15" fontFamily="monospace">JS</text>
+
+      {/* Eyes */}
+      <ellipse cx="32" cy="30" rx="6.5" ry="7.5" fill="white" />
+      <ellipse cx="48" cy="30" rx="6.5" ry="7.5" fill="white" />
+      <ellipse cx="33" cy="31" rx="4.5" ry="5.5" fill="#a16207" />
+      <ellipse cx="49" cy="31" rx="4.5" ry="5.5" fill="#a16207" />
+      <ellipse cx="33.5" cy="31.5" rx="2.8" ry="3.2" fill="#451a03" />
+      <ellipse cx="49.5" cy="31.5" rx="2.8" ry="3.2" fill="#451a03" />
+      <circle cx="35.5" cy="28.5" r="2" fill="white" />
+      <circle cx="51.5" cy="28.5" r="2" fill="white" />
+      <circle cx="31.5" cy="33" r="1" fill="white" />
+      <circle cx="47.5" cy="33" r="1" fill="white" />
+
+      {/* Blush */}
+      <ellipse cx="24" cy="37" rx="4" ry="2.5" fill="#fdba74" opacity="0.5" />
+      <ellipse cx="56" cy="37" rx="4" ry="2.5" fill="#fdba74" opacity="0.5" />
+
+      {/* Nostrils */}
+      <circle cx="37" cy="37" r="1.2" fill="#a16207" />
+      <circle cx="43" cy="37" r="1.2" fill="#a16207" />
+
+      {/* Smile */}
+      <path d="M34 42 Q40 48 46 42" stroke="#a16207" strokeWidth="2" fill="none" strokeLinecap="round" />
+      <ellipse cx="40" cy="45" rx="2.5" ry="2" fill="#fb7185" />
+
+      {/* Lightning bolt on cheek */}
+      <path d="M58 28 L55 32 L57 32 L54 36" stroke="#f97316" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+const pyConfig = {
   sensei: {
     label: "パイソン先生",
     avatar: SenseiAvatar,
@@ -165,7 +229,30 @@ const config = {
   },
 } as const;
 
+const jsConfig = {
+  sensei: {
+    label: "JS先生",
+    avatar: JsSenseiAvatar,
+    glowColor: "rgba(234, 179, 8, 0.1)",
+    borderColor: "rgba(234, 179, 8, 0.3)",
+    bubbleBg: "#fefce8",
+    labelColor: "#a16207",
+    pointerFill: "#fefce8",
+  },
+  student: {
+    label: "コードくん",
+    avatar: StudentAvatar,
+    glowColor: "rgba(59, 130, 246, 0.1)",
+    borderColor: "rgba(59, 130, 246, 0.3)",
+    bubbleBg: "#eff6ff",
+    labelColor: "#2563eb",
+    pointerFill: "#eff6ff",
+  },
+} as const;
+
 export function CharacterBubble({ character, children }: CharacterBubbleProps) {
+  const { language } = useAppConfig();
+  const config = language === "JavaScript" ? jsConfig : pyConfig;
   const { label, avatar: Avatar, glowColor, borderColor, bubbleBg, labelColor, pointerFill } =
     config[character];
 

@@ -10,7 +10,10 @@ const RUBY_PATTERN = /\{([^|{}]+)\|([^}]+)\}/g;
 
 function convertRunnableBlocks(content: string): string {
   // ```python runnable → ```python-runnable
-  return content.replace(/```python\s+runnable/g, "```python-runnable");
+  // ```javascript runnable → ```javascript-runnable
+  return content
+    .replace(/```python\s+runnable/g, "```python-runnable")
+    .replace(/```javascript\s+runnable/g, "```javascript-runnable");
 }
 
 /**

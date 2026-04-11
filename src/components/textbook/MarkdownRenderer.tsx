@@ -26,8 +26,8 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
       const lang = match?.[1];
       const codeString = String(children).replace(/\n$/, "");
 
-      // Runnable python block
-      if (lang === "python-runnable") {
+      // Runnable code block (python or javascript)
+      if (lang === "python-runnable" || lang === "javascript-runnable") {
         return <ExecutableCodeBlock initialCode={codeString} />;
       }
 
@@ -51,7 +51,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
     pre({ children }) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const child = children as any;
-      if (child?.props?.className?.includes("language-python-runnable")) {
+      if (child?.props?.className?.includes("-runnable")) {
         return <>{children}</>;
       }
       return <pre>{children}</pre>;

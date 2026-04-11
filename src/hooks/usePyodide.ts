@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { usePyodideContext } from "@/contexts/PyodideContext";
+import { useState, useCallback, useEffect } from "react";
+import { useCodeRunner } from "@/contexts/CodeRunnerContext";
 import { PyodideResult } from "@/types/pyodide";
 
 export function usePyodide() {
@@ -10,24 +10,40 @@ export function usePyodide() {
     isLoading,
     isReinitializing,
     error,
-    runPython,
+    runCode,
     cancelExecution,
-  } = usePyodideContext();
+    supportsPreview,
+    onConsoleLineRef,
+  } = useCodeRunner();
   const [isRunning, setIsRunning] = useState(false);
   const [result, setResult] = useState<PyodideResult | null>(null);
 
+  // Register streaming console handler for event handler output
+  useEffect(() => {
+    if (!onConsoleLineRef) return;
+    onConsoleLineRef.current = (line: string) => {
+      setResult((prev) => {
+        if (!prev) return prev;
+        return { ...prev, output: prev.output + line };
+      });
+    };
+    return () => {
+      onConsoleLineRef.current = null;
+    };
+  }, [onConsoleLineRef]);
+
   const execute = useCallback(
-    async (code: string): Promise<PyodideResult> => {
+    async (code: string, iframe?: HTMLIFrameElement | null): Promise<PyodideResult> => {
       setIsRunning(true);
       try {
-        const res = await runPython(code);
+        const res = await runCode(code, iframe);
         setResult(res);
         return res;
       } finally {
         setIsRunning(false);
       }
     },
-    [runPython]
+    [runCode]
   );
 
   const cancel = useCallback(() => {
@@ -47,5 +63,6 @@ export function usePyodide() {
     result,
     execute,
     cancel,
+    supportsPreview: supportsPreview ?? false,
   };
 }

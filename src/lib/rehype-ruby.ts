@@ -11,6 +11,11 @@ export function rehypeRuby() {
   return (tree: Root) => {
     visit(tree, "text", (node: Text, index, parent) => {
       if (!parent || index === undefined) return;
+
+      // Skip text inside code/pre elements
+      const parentEl = parent as Element;
+      if (parentEl.tagName === "code" || parentEl.tagName === "pre") return;
+
       if (!RUBY_PATTERN.test(node.value)) return;
 
       // Reset regex lastIndex

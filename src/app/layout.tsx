@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { PyodideProvider } from "@/contexts/PyodideContext";
-import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,31 +13,16 @@ const geistMono = Geist_Mono({
 });
 
 const BASE_URL =
-  process.env.SITE_URL ?? "https://nullstead.com/pyodessey";
-
-const siteName = "PyOdessey";
-const defaultDescription =
-  "ブラウザだけでPythonを学べる無料の学習アプリ。冒険しながら33のレッスンでプログラミングの基礎から応用まで身につけよう！";
+  process.env.SITE_URL ?? "https://nullstead.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: `${siteName} - 冒険しながら学ぶPythonプログラミング`,
-    template: `%s - ${siteName}`,
+    default: "Odessey - 冒険しながら学ぶプログラミング",
+    template: "%s",
   },
-  description: defaultDescription,
-  openGraph: {
-    type: "website",
-    siteName,
-    locale: "ja_JP",
-    title: `${siteName} - 冒険しながら学ぶPythonプログラミング`,
-    description: defaultDescription,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${siteName} - 冒険しながら学ぶPythonプログラミング`,
-    description: defaultDescription,
-  },
+  description:
+    "ブラウザだけでプログラミングを学べる無料の学習アプリ。冒険しながらプログラミングの基礎から応用まで身につけよう！",
 };
 
 export default function RootLayout({
@@ -49,14 +32,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <head>
-        <link
-          rel="preload"
-          href="https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.js"
-          as="script"
-          crossOrigin="anonymous"
-        />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -78,9 +53,7 @@ export default function RootLayout({
             パソコンの大きな画面での利用をおすすめします。
           </p>
         </div>
-        <ErrorBoundary>
-          <PyodideProvider>{children}</PyodideProvider>
-        </ErrorBoundary>
+        {children}
       </body>
     </html>
   );

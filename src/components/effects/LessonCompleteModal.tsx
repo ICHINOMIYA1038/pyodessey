@@ -6,6 +6,7 @@ import confetti from "canvas-confetti";
 import Link from "next/link";
 import { XpBar } from "./XpBar";
 import { ShareButton } from "./ShareButton";
+import { useAppConfig } from "@/contexts/AppConfigContext";
 
 interface LessonCompleteModalProps {
   show: boolean;
@@ -26,6 +27,7 @@ export function LessonCompleteModal({
 }: LessonCompleteModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const previousActiveRef = useRef<Element | null>(null);
+  const { prefix } = useAppConfig();
 
   useEffect(() => {
     if (show) {
@@ -141,7 +143,7 @@ export function LessonCompleteModal({
             {nextLessonSlug ? (
               <div className="flex flex-col gap-3">
                 <Link
-                  href={`/lesson/${nextLessonSlug}`}
+                  href={`${prefix}/lesson/${nextLessonSlug}`}
                   className="inline-block rounded-lg px-6 py-2.5 font-bold text-white transition-all"
                   style={{
                     background: "linear-gradient(135deg, #22c55e, #16a34a)",
@@ -152,7 +154,7 @@ export function LessonCompleteModal({
                   次のレッスンへ →
                 </Link>
                 <Link
-                  href="/"
+                  href={prefix}
                   className="inline-block rounded-lg px-6 py-2 font-medium transition-colors"
                   style={{
                     background: "var(--surface-3)",

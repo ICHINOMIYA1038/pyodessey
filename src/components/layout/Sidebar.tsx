@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Search } from "lucide-react";
 import { ProgressBadge } from "@/components/common/ProgressBadge";
 import { useProgress } from "@/hooks/useProgress";
+import { useAppConfig } from "@/contexts/AppConfigContext";
 import { LessonMeta } from "@/types/lesson";
 import { WORLDS } from "@/lib/world-config";
 
@@ -16,6 +17,7 @@ interface SidebarProps {
 export function Sidebar({ lessons }: SidebarProps) {
   const pathname = usePathname();
   const { isCompleted } = useProgress();
+  const { prefix } = useAppConfig();
   const [query, setQuery] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -64,13 +66,13 @@ export function Sidebar({ lessons }: SidebarProps) {
               </h2>
               <ul className="space-y-0.5">
                 {worldLessons.map((lesson) => {
-                  const isActive = pathname === `/lesson/${lesson.slug}`;
+                  const isActive = pathname === `${prefix}/lesson/${lesson.slug}`;
                   const completed = isCompleted(lesson.slug);
 
                   return (
                     <li key={lesson.slug}>
                       <Link
-                        href={`/lesson/${lesson.slug}`}
+                        href={`${prefix}/lesson/${lesson.slug}`}
                         className="flex items-center gap-2 px-2 py-1.5 text-sm transition-colors"
                         style={{
                           borderRadius: 'var(--radius-sm)',

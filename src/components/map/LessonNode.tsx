@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Check, Crown } from "lucide-react";
 import { LessonMeta } from "@/types/lesson";
 import { AccentStyle } from "@/lib/world-config";
+import { useAppConfig } from "@/contexts/AppConfigContext";
 
 interface LessonNodeProps {
   lesson: LessonMeta;
@@ -14,9 +15,10 @@ interface LessonNodeProps {
 
 export function LessonNode({ lesson, status, accent, isMilestone }: LessonNodeProps) {
   const router = useRouter();
+  const { prefix } = useAppConfig();
 
   const handleClick = () => {
-    router.push(`/lesson/${lesson.slug}`);
+    router.push(`${prefix}/lesson/${lesson.slug}`);
   };
 
   const isCurrent = status === "current";

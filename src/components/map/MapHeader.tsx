@@ -6,6 +6,7 @@ import { RotateCcw, Trophy, FlaskConical } from "lucide-react";
 import { ResetProgressModal } from "./ResetProgressModal";
 import { BadgeShowcase } from "./BadgeShowcase";
 import { AppProgress } from "@/types/lesson";
+import { useAppConfig } from "@/contexts/AppConfigContext";
 
 interface MapHeaderProps {
   completedCount: number;
@@ -18,6 +19,7 @@ export function MapHeader({ completedCount, totalCount, progress, onReset }: Map
   const pct = totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
   const [showResetModal, setShowResetModal] = useState(false);
   const [showBadges, setShowBadges] = useState(false);
+  const { prefix, emoji, headerTitle } = useAppConfig();
 
   const handleReset = () => {
     setShowResetModal(false);
@@ -38,7 +40,7 @@ export function MapHeader({ completedCount, totalCount, progress, onReset }: Map
       >
         <div className="mx-auto flex max-w-md items-center justify-between px-4 py-3">
           <span className="text-base font-bold" style={{ color: "var(--text-primary)" }}>
-            🐍 パイソンのぼうけん
+            {emoji} {headerTitle}
           </span>
           <div className="flex items-center gap-3">
             {/* Progress bar */}
@@ -61,7 +63,7 @@ export function MapHeader({ completedCount, totalCount, progress, onReset }: Map
             </div>
             {/* Sandbox link */}
             <Link
-              href="/sandbox"
+              href={`${prefix}/sandbox`}
               className="rounded-full p-1.5 transition-colors"
               style={{ color: "var(--text-muted)" }}
               onMouseEnter={(e) => {

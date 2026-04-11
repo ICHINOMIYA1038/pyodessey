@@ -4,6 +4,7 @@ import Link from "next/link";
 import { LessonMeta, AppProgress } from "@/types/lesson";
 import { WORLDS } from "@/lib/world-config";
 import { Check, ChevronRight } from "lucide-react";
+import { useAppConfig } from "@/contexts/AppConfigContext";
 
 interface MapSidebarProps {
   lessons: LessonMeta[];
@@ -11,6 +12,7 @@ interface MapSidebarProps {
 }
 
 export function MapSidebar({ lessons, progress }: MapSidebarProps) {
+  const { prefix } = useAppConfig();
   return (
     <aside
       className="hidden lg:flex h-full w-64 flex-col overflow-y-auto border-r"
@@ -54,7 +56,7 @@ export function MapSidebar({ lessons, progress }: MapSidebarProps) {
                 return (
                   <Link
                     key={lesson.slug}
-                    href={`/lesson/${lesson.slug}`}
+                    href={`${prefix}/lesson/${lesson.slug}`}
                     className="flex items-center gap-2 px-4 py-1.5 mx-2 rounded-lg text-xs transition-colors hover:bg-[var(--surface-3)]"
                     style={{
                       background: !completed ? `${world.colors.node}10` : "transparent",

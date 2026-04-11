@@ -1,6 +1,7 @@
 "use client";
 
 import { Share2 } from "lucide-react";
+import { useAppConfig } from "@/contexts/AppConfigContext";
 
 interface ShareButtonProps {
   text: string;
@@ -8,7 +9,8 @@ interface ShareButtonProps {
 }
 
 export function ShareButton({ text, className = "" }: ShareButtonProps) {
-  const shareUrl = "https://pyodessey.pages.dev/pyodessey";
+  const { prefix } = useAppConfig();
+  const shareUrl = `https://nullstead.com${prefix}`;
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`;
 
   return (

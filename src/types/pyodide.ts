@@ -5,6 +5,7 @@ export interface PyodideResult {
   isTruncated?: boolean;
   isTimeout?: boolean;
   isCancelled?: boolean;
+  hasVisualOutput?: boolean;
 }
 
 export type WorkerRequest =
